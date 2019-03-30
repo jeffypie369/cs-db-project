@@ -1,0 +1,3 @@
+SELECT Schedule.aid,Schedule.flno,Aircrafts.aname
+FROM Aircrafts, Schedule
+WHERE Schedule.aid = Aircrafts.aid
