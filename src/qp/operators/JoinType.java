@@ -19,7 +19,7 @@ public class JoinType{
    public static final int INDEXNESTED = 4;
 
    public static int numJoinTypes(){
-	return 2; // NJ and BNJ
+	return 2;
 
         // return k for k joins
     }

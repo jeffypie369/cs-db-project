@@ -1,40 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="441255fb-2b15-4697-bca8-58e7da2536b6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/QueryMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/QueryMain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/qp/operators/BlockNestedJoin.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/qp/operators/BlockNestedJoin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/qp/optimizer/RandomOptimizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/qp/optimizer/RandomOptimizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/qp/utils/Block.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/qp/utils/Block.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/qp/operators/BlockNestedJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/qp/operators/BlockNestedJoin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/qp/optimizer/RandomOptimizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/qp/optimizer/RandomOptimizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/qp/utils/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/qp/utils/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/BILL.det" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/BILL.det" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/BILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/BILL.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/BILL.stat" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/BILL.stat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/BILL.tbl" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/BILL.tbl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/BILL.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/BILL.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CART.det" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CART.det" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CART.md" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CART.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CART.stat" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CART.stat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CART.tbl" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CART.tbl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CART.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CART.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CARTDETAILS.det" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CARTDETAILS.det" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CARTDETAILS.md" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CARTDETAILS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CARTDETAILS.stat" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CARTDETAILS.stat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CARTDETAILS.tbl" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CARTDETAILS.tbl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CARTDETAILS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CARTDETAILS.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CUSTOMER.det" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CUSTOMER.det" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CUSTOMER.stat" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CUSTOMER.stat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CUSTOMER.tbl" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CUSTOMER.tbl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/CUSTOMER.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/CUSTOMER.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/generate.bat" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/generate.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/query2.out" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/query2.out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/query3.out" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/query3.out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/query5.out" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/query5.out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/query6.out" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/query6.out" afterDir="false" />
-    </list>
+    <list default="true" id="441255fb-2b15-4697-bca8-58e7da2536b6" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,22 +22,22 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="46" />
+          <entry key="java" value="47" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="46" />
+          <entry key="JAVA" value="47" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="4762" />
+          <entry key="java" value="4763" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="4762" />
+          <entry key="JAVA" value="4763" />
         </counts>
       </usages-collector>
     </session>
@@ -80,16 +47,25 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/QueryMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="122" column="44" selection-start-line="122" selection-start-column="44" selection-end-line="122" selection-end-column="44" />
+            <state relative-caret-position="299">
+              <caret line="181" lean-forward="true" selection-start-line="181" selection-end-line="181" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qp/operators/Distinct.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="15" column="18" lean-forward="true" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/qp/operators/BlockNestedJoin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-230">
+            <state relative-caret-position="115">
               <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -123,17 +99,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/qp/optimizer/RandomOptimizer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3565">
+            <state relative-caret-position="2369">
               <caret line="179" column="113" selection-start-line="179" selection-start-column="113" selection-end-line="179" selection-end-column="113" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/qp/operators/JoinType.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
+            <state relative-caret-position="345">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
             </state>
           </provider>
         </entry>
@@ -205,14 +181,14 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/qp/parser/Scaner.java" />
-        <option value="$PROJECT_DIR$/src/qp/operators/JoinType.java" />
         <option value="$PROJECT_DIR$/src/qp/operators/NestedJoin.java" />
         <option value="$PROJECT_DIR$/src/qp/optimizer/PlanCost.java" />
         <option value="$PROJECT_DIR$/src/qp/utils/Block.java" />
         <option value="$PROJECT_DIR$/src/qp/operators/BlockNestedJoin.java" />
-        <option value="$PROJECT_DIR$/src/qp/optimizer/RandomOptimizer.java" />
         <option value="$PROJECT_DIR$/src/qp/optimizer/RandomOptimizer2.java" />
         <option value="$PROJECT_DIR$/src/QueryMain.java" />
+        <option value="$PROJECT_DIR$/src/qp/optimizer/RandomOptimizer.java" />
+        <option value="$PROJECT_DIR$/src/qp/operators/JoinType.java" />
       </list>
     </option>
   </component>
@@ -228,6 +204,7 @@
     <option name="width" value="1938" />
     <option name="height" value="1098" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -284,13 +261,14 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553935832753" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553938072825" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -330,12 +308,12 @@
       <updated>1553253961396</updated>
       <workItem from="1553253962703" duration="3763000" />
       <workItem from="1553346402045" duration="22640000" />
-      <workItem from="1553479429746" duration="37415000" />
+      <workItem from="1553479429746" duration="39535000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63818000" />
+    <option name="totallyTimeSpent" value="65938000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -562,13 +540,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/qp/operators/JoinType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/qp/utils/Schema.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2116">
@@ -603,20 +574,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/qp/optimizer/RandomOptimizer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3565">
-          <caret line="179" column="113" selection-start-line="179" selection-start-column="113" selection-end-line="179" selection-end-column="113" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/QueryMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="122" column="44" selection-start-line="122" selection-start-column="44" selection-end-line="122" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/qp/optimizer/RandomOptimizer2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9499">
@@ -633,11 +590,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qp/operators/BlockNestedJoin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-230">
+        <state relative-caret-position="115">
           <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/QueryMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="181" lean-forward="true" selection-start-line="181" selection-end-line="181" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qp/operators/Distinct.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="15" column="18" lean-forward="true" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qp/optimizer/RandomOptimizer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2369">
+          <caret line="179" column="113" selection-start-line="179" selection-start-column="113" selection-end-line="179" selection-end-column="113" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qp/operators/JoinType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
