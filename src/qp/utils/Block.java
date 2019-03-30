@@ -3,6 +3,11 @@ package qp.utils;
 import java.util.Vector;
 import java.io.Serializable;
 
+/**
+ * This class represents a block, to be used for Block Nested Loops Join (BNLJ).
+ * A block contains a number of pages.
+ */
+
 public class Block implements Serializable {
     int MAX_SIZE;  // Number of tuples per page
     int pageSize;  /* Number of bytes per page**/

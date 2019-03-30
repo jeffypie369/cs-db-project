@@ -7,6 +7,11 @@ import java.io.*;
 import java.util.*;
 import java.lang.*;
 
+/**
+ * This class is largely similar to NestedJoin except that it has been modified to execute Block Nested Loops Join
+ * instead of Nested Join.
+ */
+
 public class BlockNestedJoin extends Join{
 
     int batchsize;  //Number of tuples per out batch
