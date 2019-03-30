@@ -110,7 +110,7 @@ public class NestedJoin extends Join{
 
 
     public Batch next(){
-	System.out.print("NestedJoin:--------------------------in next----------------");
+	//System.out.print("NestedJoin:--------------------------in next----------------");
 	//Debug.PPrint(con);
 	//System.out.println();
 	int i,j;

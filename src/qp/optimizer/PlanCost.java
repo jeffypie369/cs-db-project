@@ -113,6 +113,7 @@ public class PlanCost{
 	int leftpages=(int) Math.ceil(((double)lefttuples)/(double)leftcapacity);
 	int rightpages=(int) Math.ceil(((double)righttuples)/(double) rightcapacity);
 
+
 	Attribute leftjoinAttr = con.getLhs();
 	Attribute rightjoinAttr = (Attribute)con.getRhs();
 	int leftattrind = leftschema.indexOf(leftjoinAttr);
@@ -145,10 +146,10 @@ public class PlanCost{
 	    joincost = leftpages*rightpages;
 	    break;
 	case JoinType.BLOCKNESTED:
-	    joincost = leftpages + (int) Math.ceil(leftpages / (double) (numbuff - 2)) * rightpages;
+	    joincost = 100000000;
 	    break;
 	case JoinType.SORTMERGE:
-	    joincost = 0;
+	    joincost = leftpages + rightpages;
 	    break;
 	case JoinType.HASHJOIN:
 	    joincost = 0;
