@@ -194,14 +194,22 @@ public class RandomInitialPlan{
 
 
     public void createProjectOp(){
+		System.out.println("executed");
 	Operator base = root;
         if ( projectlist == null )
             projectlist = new Vector();
 
 	if(!projectlist.isEmpty()){
-	    root = new Project(base,projectlist,OpType.PROJECT);
-	    Schema newSchema = base.getSchema().subSchema(projectlist);
-	    root.setSchema(newSchema);
+		if(!sqlquery.isDistinct()){
+			root = new Project(base, projectlist, OpType.PROJECT);
+			Schema newSchema = base.getSchema().subSchema(projectlist);
+			root.setSchema(newSchema);
+		}
+		else {
+			root = new Distinct(base, projectlist, OpType.DISTINCT);
+			Schema newSchema = base.getSchema().subSchema(projectlist);
+			root.setSchema(newSchema);
+		}
 	}
     }
 
