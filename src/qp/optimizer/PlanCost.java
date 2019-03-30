@@ -71,7 +71,6 @@ public class PlanCost{
 	    return getStatistics((Project)node);
 	}else if(node.getOpType() == OpType.SCAN){
 	    return getStatistics((Scan)node);
-
 	}
 	return -1;
     }
