@@ -44,7 +44,6 @@ public class ExternalSort extends Operator{
     }
 
     public boolean open() {
-        System.out.println("hello");
         if (!table.open()) {
             return false;
         }
@@ -53,9 +52,7 @@ public class ExternalSort extends Operator{
         fileStack = new Stack();
         phaseOne(); //Create sorted runs
         flag = true;
-        System.out.println("Phase 1 complete");
         phaseTwo(); //Merge Sorted Runs
-        System.out.println("Phase 2 completed");
 
         return true;
     }
@@ -78,7 +75,6 @@ public class ExternalSort extends Operator{
             loadTuplesIntoMemory();
             sortRuns(); //might have to change implementation because you want to sort within batches
             writeRunsToFile(runNum);
-            System.out.println("Phase one " + String.valueOf(runNum));
             runNum++;
         }
     }
