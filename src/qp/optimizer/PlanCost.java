@@ -69,6 +69,8 @@ public class PlanCost{
 	    return getStatistics((Select)node);
 	}else if(node.getOpType() == OpType.PROJECT){
 	    return getStatistics((Project)node);
+	}else if(node.getOpType() == OpType.DISTINCT){
+		return getStatistics((Distinct)node);
 	}else if(node.getOpType() == OpType.SCAN){
 	    return getStatistics((Scan)node);
 
@@ -84,6 +86,12 @@ public class PlanCost{
     protected int getStatistics(Project node){
 	return calculateCost(node.getBase());
     }
+
+	protected int getStatistics(Distinct node){
+		int c = calculateCost(node.getBase());
+		cost += c * (int)(Math.log((double)c) / Math.log((double)10)); //Cost for CollectionSort O(n log n)
+		return c;
+	}
 
 
 	/** calculates the statistics, and cost of join operation **/

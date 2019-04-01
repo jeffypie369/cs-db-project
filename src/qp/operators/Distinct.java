@@ -69,7 +69,7 @@ public class Distinct extends Operator {
 
     private boolean sortTableScan(Vector<Tuple> v) {
         //Bubblesort right now
-        boolean swapped = true;
+       /*boolean swapped = true;
         while(swapped) {
             swapped = false;
             for(int i = 0; i < v.size() - 1; i++){
@@ -85,10 +85,23 @@ public class Distinct extends Operator {
                     }
                 }
             }
-        }
+        }*/
+
         //for(int i = 0; i < v.size(); i++){
         //    printTuple(v.elementAt(i));
         //}
+        //CollectionSort is better
+        v.sort( (arg0, arg1)
+                        ->{
+                    boolean toContinue = false;
+                    for(int j = 0; j < attrIndex.length; j++){
+                        int cmpResult = Tuple.compareTuples(arg0, arg1, attrIndex[j]);
+                        if(cmpResult != 0){ return cmpResult; }
+                    }
+                    return 0;
+                }
+        );
+
         return true;
     }
 
@@ -172,7 +185,7 @@ public class Distinct extends Operator {
         while(true){ //We have to scan through all batches because some tuples may get skipped
             if(readComplete){  /*System.out.println("Outbatch2: null");*/ return null; }
             if(initializeNextBatch()){  /*System.out.println("Outbatch3: " + outBatch.size());*/ return outBatch; }
-             /*System.out.println("iteration: " + inBatch.size() + ", " + outBatch.capacity());*/
+            /*System.out.println("iteration: " + inBatch.size() + ", " + outBatch.capacity());*/
 
             //System.out.println("Distinct:---------------base tuples---------");
             for(int i = 0; i < inBatch.size(); i++) {
@@ -184,8 +197,8 @@ public class Distinct extends Operator {
                     Object data = basetuple.dataAt(attrIndex[j]);
                     present.add(data);
                 }
-                printTuple(new Tuple(present));
-                 /*System.out.println("batchsize: " + outBatch.size() + ", " + outBatch.capacity());*/
+                //printTuple(new Tuple(present));
+                /*System.out.println("batchsize: " + outBatch.size() + ", " + outBatch.capacity());*/
                 if (!lEntry.equals(present)) { //Check for two subsequent elements
                     Tuple outtuple = new Tuple(present);
                     //printTuple(outtuple);
