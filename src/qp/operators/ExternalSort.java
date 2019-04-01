@@ -73,8 +73,8 @@ public class ExternalSort extends Operator{
                 break;
             }
             loadTuplesIntoMemory();
-            sortRuns(); //might have to change implementation because you want to sort within batches
-            writeRunsToFile(runNum);
+            sortRuns();
+            writeRunsToFile(runNum); // each run is assigned a number
             runNum++;
         }
     }
@@ -96,7 +96,7 @@ public class ExternalSort extends Operator{
     }
 
     /**
-     * Must change
+     * Internal sort the runs
      */
     private void sortRuns() {
         Collections.sort(memory, (leftTuple,rightTuple) -> Tuple.compareTuples(leftTuple,rightTuple,joinIndex));
@@ -141,7 +141,7 @@ public class ExternalSort extends Operator{
 
     private void phaseTwo() {
         numPasses = calculateNumPasses();
-        mergeRuns();
+        mergeRuns(); // as explained in lecture slides
         close();
     }
 
@@ -166,6 +166,9 @@ public class ExternalSort extends Operator{
         int readRunIntoMemoryPointer = 0;
         int writeRunIntoFilePointer = 0;
 
+        /**
+         * runNum slowly decreases with increasing passes. Runs become bigger.
+         */
         while (runNum != 1) {
             for (int i = 0; i < numPasses;i++) {
 
@@ -179,8 +182,8 @@ public class ExternalSort extends Operator{
                 writeRunsToFile(writeRunIntoFilePointer);
                 writeRunIntoFilePointer++;
             }
-            readRunIntoMemoryPointer = 0;
-            writeRunIntoFilePointer = 0;
+            readRunIntoMemoryPointer = 0; // reset
+            writeRunIntoFilePointer = 0; // reset
             runNum = Math.ceil(runNum/numInputBuffers);
             close();
         }

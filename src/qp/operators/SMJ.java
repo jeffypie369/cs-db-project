@@ -13,9 +13,7 @@ import qp.utils.Batch;
 import qp.utils.Tuple;
 
 /**
- *  1st Step -> Sort both left and right tables
- *  2nd Step -> Scan left table once. Each right table partition is scanned once per matching left table tuple
- *  3rd Step -> Do a merge and output tuples
+ *  Test class for sort merge join. To be deleted after testing
  */
 public class SMJ extends Join {
 

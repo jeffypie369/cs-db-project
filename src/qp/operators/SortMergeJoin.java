@@ -13,10 +13,8 @@ import qp.utils.Tuple;
 
 public class SortMergeJoin extends Join {
 
-    private Operator table;
-
-    ObjectInputStream inputLeft;
-    ObjectInputStream inputRight;
+    private ObjectInputStream inputLeft;
+    private ObjectInputStream inputRight;
 
     private String leftTableName = "LSTTemp-";
     private String rightTableName = "RSTTemp-";
@@ -24,9 +22,8 @@ public class SortMergeJoin extends Join {
     private int leftAttrIndex;
     private int rightAttrIndex;
 
-    private ExternalSort leftTable;
-    private ExternalSort rightTable;
-    int tupleSize, batchSize, rightTupleSize, leftTupleSize, leftBatchSize, rightBatchSize;
+
+    private int batchSize, leftBatchSize, rightBatchSize;
 
 
     private int leftTablePointer;
@@ -34,9 +31,6 @@ public class SortMergeJoin extends Join {
 
     private Batch leftBatch;
     private ArrayList<Batch> rightBuffer;
-
-    private Tuple leftTuple;
-    private Tuple rightTuple;
 
     private int currentLeftBatchIndex;
     private int currentRightBufferIteration;
@@ -54,6 +48,9 @@ public class SortMergeJoin extends Join {
     }
 
     public boolean open() {
+        int tupleSize, leftTupleSize, rightTupleSize;
+        ExternalSort leftTable;
+        ExternalSort rightTable;
 
         // Number of tuples per batch
         tupleSize = getSchema().getTupleSize();
@@ -62,11 +59,13 @@ public class SortMergeJoin extends Join {
         leftTupleSize = getLeft().getSchema().getTupleSize();
         rightTupleSize = getRight().getSchema().getTupleSize();
 
-        leftBatchSize = Batch.getPageSize() / leftTupleSize;
-        rightBatchSize = Batch.getPageSize() / rightTupleSize;
+        leftBatchSize = Batch.getPageSize() / leftTupleSize; // no of tuples in 1 left batch
+        rightBatchSize = Batch.getPageSize() / rightTupleSize; // no of tuples in 1 right batch
 
-        leftBatch = new Batch(leftBatchSize);
-        rightBuffer = new ArrayList<>();
+        // to extract tuples from the 1 left sorted table file and 1 right sorted table file, have to make use of buffers
+        // to extract the tuples via batches
+        leftBatch = new Batch(leftBatchSize); // just 1 buffer for left table
+        rightBuffer = new ArrayList<>(); // assign numBuff - 2 to right Buffer to accomodate large right table
 
         Attribute leftAttr = getCondition().getLhs();
         Attribute rightAttr = (Attribute) getCondition().getRhs();
@@ -74,8 +73,8 @@ public class SortMergeJoin extends Join {
         leftAttrIndex = getLeft().getSchema().indexOf(leftAttr);
         rightAttrIndex = getRight().getSchema().indexOf(rightAttr);
 
-        currentLeftBatchIndex = 0;
-        currentRightBufferIteration = 0;
+        currentLeftBatchIndex = 0; // keeps track of the ith left batch index
+        currentRightBufferIteration = 0; // keeps track of the ith right buffer iteration
         leftTablePointer = 0;
         rightTablePointer = 0;
 
@@ -88,6 +87,7 @@ public class SortMergeJoin extends Join {
             return false;
         }
 
+        // file name ends with 0.0 (have to double check with what is created in directory
         try {
             inputLeft = new ObjectInputStream(new FileInputStream(leftTableName + "0.0"));
             inputRight = new ObjectInputStream(new FileInputStream(rightTableName + "0.0"));
@@ -112,6 +112,7 @@ public class SortMergeJoin extends Join {
         Tuple rightTuple = loadNextRightTuple(rightTablePointer);
         Tuple leftTuple = loadNextLeftTuple(leftTablePointer);
 
+        // always check for EOF
         while (!(outBatch.isFull() || endOfLeftTable() || endOfRightTable())) {
 
             if (leftIsGreaterThanRight(leftTuple, rightTuple)) {
@@ -184,32 +185,23 @@ public class SortMergeJoin extends Join {
     private boolean leftIsGreaterThanRight(Tuple leftTuple, Tuple rightTuple) {
         int comparison = Tuple.compareTuples(leftTuple, rightTuple, leftAttrIndex, rightAttrIndex);
 
-        if (comparison > 0) {
-            return true;
-        }
-        return false;
+        return comparison > 0;
     }
 
     private boolean rightIsGreaterThanLeft(Tuple leftTuple, Tuple rightTuple) {
 
         int comparison = Tuple.compareTuples(leftTuple, rightTuple, leftAttrIndex, rightAttrIndex);
 
-        if (comparison < 0) {
-            return true;
-        }
+        return comparison < 0;
 
-        return false;
     }
 
     private boolean leftIsEqualToRight(Tuple leftTuple, Tuple rightTuple) {
 
         int comparison = Tuple.compareTuples(leftTuple, rightTuple, leftAttrIndex, rightAttrIndex);
 
-        if (comparison == 0) {
-            return true;
-        }
+        return comparison == 0;
 
-        return false;
     }
 
     private void combineTuplesIntoOutput(Tuple leftTuple, Tuple rightTuple, Batch outBatch) {
@@ -240,12 +232,10 @@ public class SortMergeJoin extends Join {
     private Tuple loadNextLeftTuple(int index) {
         int batchIndex, tupleIndexInBatch;
 
-        batchIndex = index / leftBatchSize;
-        tupleIndexInBatch = index % leftBatchSize;
+        batchIndex = index / leftBatchSize; // access the ith batch that contains the tuple
+        tupleIndexInBatch = index % leftBatchSize; // access the exact location of the tuple in the batch
 
-        System.out.println("left: " + index + ", " + leftBatchSize + ", " + batchIndex + ", " + currentLeftBatchIndex);
-        Batch output = readLeftBatch(batchIndex);
-        leftBatch = output;
+        leftBatch = readLeftBatch(batchIndex);
 
         if (batchIndex != currentLeftBatchIndex) {
             currentLeftBatchIndex++;
@@ -264,12 +254,12 @@ public class SortMergeJoin extends Join {
 
 
         tupleIndexInBatch = index % rightBatchSize;
-        bufferIteration = batchIndex / (numBuff - 2);
+        bufferIteration = batchIndex / (numBuff - 2); // a number of buffers exist in 1 iteration.
 
         if (bufferIteration != currentRightBufferIteration) {
             currentRightBufferIteration++;
         }
-        System.out.println("right " + index + ", " + rightBatchSize + ", " + batchIndex + ", " + bufferIteration + ", " + currentRightBufferIteration);
+
         Batch output = readRightBuffer(batchIndex, bufferIteration); // outputs the buffer in the array of buffers(batches)
 
         if (output == null) {
@@ -287,14 +277,13 @@ public class SortMergeJoin extends Join {
         } else {
 
             try {
-                Batch leftIntermediateBatch = (Batch) inputLeft.readObject();
-                output = leftIntermediateBatch;
+                output = (Batch) inputLeft.readObject();
             } catch (EOFException eof) {
 
                 try {
                     inputLeft.close();
-                    File f = new File(leftTableName + "0.0");
-                    f.delete();
+                    File inputFile = new File(leftTableName + "0.0");
+                    inputFile.delete();
                 } catch (IOException io) {
                     System.err.println("SortMergeJoin: Error in reading left batches" + io);
                     System.exit(1);
@@ -347,6 +336,9 @@ public class SortMergeJoin extends Join {
         return output;
     }
 
+    /**
+     * initialize buffers before proceeding with merging
+     */
     private void initialize() {
         initializeLeftBatch();
         initializeRightBuffer();
@@ -364,8 +356,8 @@ public class SortMergeJoin extends Join {
 
             try {
                 inputLeft.close();
-                File f = new File(leftTableName + "0.0");
-                f.delete();
+                File inputFile  = new File(leftTableName + "0.0");
+                inputFile.delete();
             } catch (IOException io) {
                 System.err.println("SortMergeJoin: Error in reading left batches" + io);
                 System.exit(1);
@@ -391,8 +383,8 @@ public class SortMergeJoin extends Join {
             } catch (EOFException eof) {
                 try {
                     inputRight.close();
-                    File f = new File(rightTableName + "0.0");
-                    f.delete();
+                    File inputFile = new File(rightTableName + "0.0");
+                    inputFile.delete();
                 } catch (IOException io) {
                     System.err.println("SortMergeJoin: Error in reading right buffer" + io);
                     System.exit(1);
