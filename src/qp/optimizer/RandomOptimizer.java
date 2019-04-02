@@ -6,7 +6,6 @@ package qp.optimizer;
 import qp.utils.*;
 import qp.operators.*;
 import java.lang.Math;
-import java.net.InetSocketAddress;
 import java.util.Vector;
 
 public class RandomOptimizer{
@@ -511,8 +510,10 @@ public class RandomOptimizer{
 
 	    case JoinType.SORTMERGE:
 
-		NestedJoin sm = new NestedJoin((Join) node);
-                /* + other code */
+		SortMergeJoin sm = new SortMergeJoin((Join) node);
+		sm.setLeft(left);
+		sm.setRight(right);
+		sm.setNumBuff(numbuff);
 		return sm;
 
 	    case JoinType.HASHJOIN:
