@@ -120,7 +120,6 @@ public class QueryMain{
 	    execution plan
 **/
 
-//	RandomOptimizer ro = new RandomOptimizer(sqlquery);
 	RandomOptimizer ro = new RandomOptimizer(sqlquery);
 	Operator logicalroot = ro.getOptimizedPlan();
 	if(logicalroot==null){
