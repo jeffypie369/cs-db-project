@@ -83,7 +83,7 @@ public class SortMergeJoin extends Join{
 
 
         if (!leftTable.open() || !rightTable.open()) {
-            System.err.println("smj:Error in opening tables");
+            System.err.println("SortMergeJoin:Error in opening tables");
             return false;
         }
 
@@ -92,7 +92,7 @@ public class SortMergeJoin extends Join{
             inputLeft = new ObjectInputStream(new FileInputStream(leftTableName + "0.0"));
             inputRight = new ObjectInputStream(new FileInputStream(rightTableName + "0.0"));
         } catch (IOException io) {
-            System.err.println("smj:Error in reading in input files");
+            System.err.println("SortMergeJoin:Error in reading in input files");
             System.exit(1);
         }
 

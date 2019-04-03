@@ -64,7 +64,10 @@ public class ExternalSort extends Operator{
 
         if (runNum == 0) {
             batch = table.next();
-            batchSize = batch.size();
+
+            if (batch != null) {
+                batchSize = batch.size();
+            }
         }
 
         while (batch != null) {
