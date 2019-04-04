@@ -168,6 +168,7 @@ public class SortMergeJoin extends Join {
                     }
 
                     leftTablePointer++;
+
                     leftTuple = loadNextLeftTuple(leftTablePointer);
                     while (!endOfRightTable() && !endOfLeftTable() && leftIsEqualToRight(leftTuple, rightTuple)) {
 
@@ -186,20 +187,9 @@ public class SortMergeJoin extends Join {
 
                     }
 
-                    leftTablePointer++;
-                    rightTablePointer++;
-
-                    if (endOfRightTable()) {
+                    if (endOfRightTable() || endOfLeftTable()) {
                         break;
                     }
-
-                    if (endOfLeftTable()) {
-                        break;
-                    }
-
-                    rightTuple = loadNextRightTuple(rightTablePointer);
-                    leftTuple = loadNextLeftTuple(leftTablePointer);
-
                 }
             }
         }
