@@ -11,7 +11,7 @@ import qp.utils.Attribute;
 import qp.utils.Batch;
 import qp.utils.Tuple;
 
-public class SortMergeJoin extends Join{
+public class SortMergeJoin extends Join {
 
     private ObjectInputStream inputLeft;
     private ObjectInputStream inputRight;
@@ -31,9 +31,11 @@ public class SortMergeJoin extends Join{
 
     private Batch leftBatch;
     private ArrayList<Batch> rightBuffer;
+    private Batch rightOutputBatch;
 
     private int currentLeftBatchIndex;
     private int currentRightBufferIteration;
+    private Batch outputBatch;
 
     /**
      * 2 phases to External sort -
@@ -83,7 +85,7 @@ public class SortMergeJoin extends Join{
 
 
         if (!leftTable.open() || !rightTable.open()) {
-            System.err.println("SortMergeJoin:Error in opening tables");
+            System.err.println("SortMergeJoin: Error in opening tables");
             return false;
         }
 
@@ -92,7 +94,7 @@ public class SortMergeJoin extends Join{
             inputLeft = new ObjectInputStream(new FileInputStream(leftTableName + "0.0"));
             inputRight = new ObjectInputStream(new FileInputStream(rightTableName + "0.0"));
         } catch (IOException io) {
-            System.err.println("SortMergeJoin:Error in reading in input files");
+            System.err.println("SortMergeJoin: Error in reading in input files");
             System.exit(1);
         }
 
@@ -107,7 +109,7 @@ public class SortMergeJoin extends Join{
      */
     public Batch next() {
 
-        Batch outBatch = new Batch(batchSize);
+        outputBatch = new Batch(batchSize);
 
         if (endOfLeftTable() || endOfRightTable()) {
 
@@ -116,7 +118,7 @@ public class SortMergeJoin extends Join{
             Tuple leftTuple = loadNextLeftTuple(leftTablePointer);
 
             // always check for EOF
-            while (!(outBatch.isFull() || endOfLeftTable() || endOfRightTable())) {
+            while (!(outputBatch.isFull() || endOfLeftTable() || endOfRightTable())) {
 
                 if (leftIsGreaterThanRight(leftTuple, rightTuple)) {
                     rightTablePointer++;
@@ -124,48 +126,64 @@ public class SortMergeJoin extends Join{
                     if (endOfRightTable()) {
                         break;
                     }
-                    loadNextRightTuple(rightTablePointer);
+                    rightTuple = loadNextRightTuple(rightTablePointer);
+
                 } else if (rightIsGreaterThanLeft(leftTuple, rightTuple)) {
                     leftTablePointer++;
 
                     if (endOfLeftTable()) {
                         break;
                     }
-                    loadNextLeftTuple(leftTablePointer);
+                    leftTuple = loadNextLeftTuple(leftTablePointer);
+
                 } else {
 
-                    combineTuplesIntoOutput(leftTuple, rightTuple, outBatch);
+                    combineTuplesIntoOutput(leftTuple, rightTuple, outputBatch);
+
+                    if (outputBatch.isFull()) {
+                        return outputBatch;
+                    }
                     rightTablePointer++;
 
                     if (endOfRightTable()) {
                         break;
                     }
-                    loadNextRightTuple(rightTablePointer);
+                    rightTuple = loadNextRightTuple(rightTablePointer);
 
                     while (!endOfRightTable() && !endOfLeftTable() && leftIsEqualToRight(leftTuple, rightTuple)) {
 
-                        combineTuplesIntoOutput(leftTuple, rightTuple, outBatch);
+                        combineTuplesIntoOutput(leftTuple, rightTuple, outputBatch);
+
+                        if (outputBatch.isFull()) {
+                            return outputBatch;
+                        }
                         rightTablePointer++;
 
                         if (endOfRightTable()) {
                             break;
                         }
 
-                        loadNextRightTuple(rightTablePointer);
+                        rightTuple = loadNextRightTuple(rightTablePointer);
+
                     }
 
                     leftTablePointer++;
-                    loadNextLeftTuple(leftTablePointer);
+                    leftTuple = loadNextLeftTuple(leftTablePointer);
                     while (!endOfRightTable() && !endOfLeftTable() && leftIsEqualToRight(leftTuple, rightTuple)) {
 
-                        combineTuplesIntoOutput(leftTuple, rightTuple, outBatch);
+                        combineTuplesIntoOutput(leftTuple, rightTuple, outputBatch);
+
+                        if (outputBatch.isFull()) {
+                            return outputBatch;
+                        }
                         leftTablePointer++;
 
                         if (endOfLeftTable()) {
                             break;
                         }
 
-                        loadNextLeftTuple(leftTablePointer);
+                        leftTuple = loadNextLeftTuple(leftTablePointer);
+
                     }
 
                     leftTablePointer++;
@@ -181,15 +199,14 @@ public class SortMergeJoin extends Join{
 
                     rightTuple = loadNextRightTuple(rightTablePointer);
                     leftTuple = loadNextLeftTuple(leftTablePointer);
+
                 }
             }
-
         }
-
-        if (outBatch.isEmpty()) {
+        if (outputBatch.isEmpty()) {
             return null;
         } else {
-            return outBatch;
+            return outputBatch;
         }
     }
 
@@ -219,9 +236,9 @@ public class SortMergeJoin extends Join{
 
     }
 
-    private void combineTuplesIntoOutput(Tuple leftTuple, Tuple rightTuple, Batch outBatch) {
+    private void combineTuplesIntoOutput(Tuple leftTuple, Tuple rightTuple, Batch outputBatch) {
         Tuple combine = leftTuple.joinWith(rightTuple);
-        outBatch.add(combine);
+        outputBatch.add(combine);
     }
 
     private boolean endOfLeftTable() {
@@ -265,23 +282,25 @@ public class SortMergeJoin extends Join{
     private Tuple loadNextRightTuple(int index) {
         int batchIndex, tupleIndexInBatch, bufferIteration;
 
-        batchIndex = index / rightBatchSize;
+        batchIndex = index / rightBatchSize; // batchIndex is the ith batch in buffer that the tuple is located
 
 
         tupleIndexInBatch = index % rightBatchSize;
         bufferIteration = batchIndex / (numBuff - 2); // a number of buffers exist in 1 iteration.
+
 
         if (bufferIteration != currentRightBufferIteration) {
             currentRightBufferIteration++;
         }
 
         Batch output = readRightBuffer(batchIndex, bufferIteration); // outputs the buffer in the array of buffers(batches)
+        rightOutputBatch = output;
 
         if (output == null) {
             return null;
         }
 
-        return output.elementAt(tupleIndexInBatch);
+        return rightOutputBatch.elementAt(tupleIndexInBatch);
     }
 
     private Batch readLeftBatch(int batchIndex) {
@@ -319,7 +338,7 @@ public class SortMergeJoin extends Join{
             return rightBuffer.get(batchIndex % (numBuff - 2));
         } else {
             rightBuffer.clear();
-            for (int i = 0;i < (numBuff - 2); i++) {
+            for (int i = 0; i < (numBuff - 2); i++) {
                 try {
                     Batch batch = (Batch) inputRight.readObject();
 
@@ -327,18 +346,18 @@ public class SortMergeJoin extends Join{
                         break;
                     }
                     rightBuffer.add(batch);
-                    System.out.println(rightBuffer);
-                } catch (EOFException eof) {
+                }
+                catch (EOFException eof) {
                     try {
                         inputRight.close();
-                        File f = new File(rightTableName + "0.0");
-                        f.delete();
+                        File inputFile = new File(rightTableName + "0.0");
+                        inputFile.delete();
                     } catch (IOException io) {
-                        System.err.println("smj: Error in reading right buffer" + io);
+                        System.err.println("SortMergeJoin: Error in reading right batches" + io);
                         System.exit(1);
                     }
                 } catch (ClassNotFoundException ce) {
-                    System.err.println("smj: Error in reading right buffer" + ce);
+                    System.err.println("SortMergeJoin: Error in reading right batches" + ce);
                     System.exit(1);
                 } catch (IOException io) {
                     return null;
@@ -371,14 +390,14 @@ public class SortMergeJoin extends Join{
 
             try {
                 inputLeft.close();
-                File inputFile  = new File(leftTableName + "0.0");
+                File inputFile = new File(leftTableName + "0.0");
                 inputFile.delete();
             } catch (IOException io) {
-                System.err.println("smj: Error in reading left batches" + io);
+                System.err.println("SortMergeJoin: Error in reading left batches" + io);
                 System.exit(1);
             }
         } catch (ClassNotFoundException ce) {
-            System.err.println("smj: Error in reading left batches" + ce);
+            System.err.println("SortMergeJoin: Error in reading left batches" + ce);
             System.exit(1);
         } catch (IOException io) {
             return;
@@ -386,25 +405,27 @@ public class SortMergeJoin extends Join{
     }
 
     private void initializeRightBuffer() {
-        for (int i = 0;i < (numBuff - 2); i++) {
+        for (int i = 0; i < (numBuff - 2); i++) {
             try {
                 Batch batch = (Batch) inputRight.readObject();
 
                 if (batch == null) {
                     break;
                 }
+
                 rightBuffer.add(batch);
+
             } catch (EOFException eof) {
                 try {
                     inputRight.close();
                     File inputFile = new File(rightTableName + "0.0");
                     inputFile.delete();
                 } catch (IOException io) {
-                    System.err.println("smj: Error in reading right buffer" + io);
+                    System.err.println("SortMergeJoin: Error in reading right batches" + io);
                     System.exit(1);
                 }
             } catch (ClassNotFoundException ce) {
-                System.err.println("smj: Error in reading right buffer" + ce);
+                System.err.println("SortMergeJoin: Error in reading right batches" + ce);
                 System.exit(1);
             } catch (IOException io) {
                 return;
@@ -412,3 +433,4 @@ public class SortMergeJoin extends Join{
         }
     }
 }
+
