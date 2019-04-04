@@ -87,10 +87,34 @@ public class PlanCost{
     }
 
 	protected int getStatistics(Distinct node){
-		int c = calculateCost(node.getBase());
-		cost += c * (int)(Math.log((double)c) / Math.log((double)10)); //Cost for CollectionSort O(n log n)
-		return c;
+    	if(node == null || node.getBase() == null || node.getBase().getSchema() == null){ return -1; }
+
+		int lines = calculateCost(node.getBase());
+		//System.out.println("Distinct lines to sort: " + lines);
+
+		//Loads needed to store all tuples in memory
+		double loadsNeeded = Math.ceil(
+
+				(double)((int)Math.ceil(
+				(double)lines / (double)(node.getBase().getSchema().getTupleSize())
+				))
+
+				/ BufferManager.numBuffer
+
+		);
+
+		//Sorting cost dependent on the number of loads
+		double dCostToAdd = Math.ceil(
+				Math.log(loadsNeeded) / Math.log(BufferManager.numBuffer - 1)
+		);
+		int iCostToAdd = (int)(dCostToAdd + 1.0D);
+		//System.out.println("Distinct SortCost: " + iCostToAdd);
+		//System.out.println("Distinct CostBefore: " + cost);
+		cost += iCostToAdd;
+		//System.out.println("Distinct CostAfter: " + cost);
+		return lines;
 	}
+
 
 	/** calculates the statistics, and cost of join operation **/
 
