@@ -1,2 +1,2 @@
-java QueryMain query4 query4.out
+java QueryMain query4 query4njbnj.out
 pause

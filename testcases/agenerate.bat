@@ -1,3 +1,3 @@
-java QueryMain query9 query9.out
+java QueryMain query3 query3.out
 
 pause

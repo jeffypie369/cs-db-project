@@ -22,6 +22,10 @@ public class Block implements Serializable {
         batches = new Vector(MAX_SIZE);
     }
 
+    /**
+     * Adds a new Batch to this Block
+     * @param batch the batch to be added
+     */
     public void addBatch(Batch batch) {
         if (batches.size() < MAX_SIZE) {
             batches.add(batch);
