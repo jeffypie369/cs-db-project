@@ -127,13 +127,12 @@ public class BlockNestedJoin extends Join{
         }
         outbatch = new Batch(batchsize);
 
-
         while(!outbatch.isFull()){
 
             if(lcurs==0 && eosr==true){
                 /** new left block is to be fetched**/
                 block = new Block(blocksize, batchsize);
-                while (!block.isFull()) { // check if need !eosl
+                while (!block.isFull()) {
                     /** new left page is to be fetched**/
                     leftbatch =(Batch) left.next();
                     if (leftbatch != null) {

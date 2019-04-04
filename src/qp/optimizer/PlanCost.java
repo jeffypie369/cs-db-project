@@ -92,7 +92,6 @@ public class PlanCost{
 		return c;
 	}
 
-
 	/** calculates the statistics, and cost of join operation **/
 
     protected int getStatistics(Join node){

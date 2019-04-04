@@ -1,2 +1,2 @@
-java QueryMain query2 query2.out
+java QueryMain query2 query2smj.out
 pause
