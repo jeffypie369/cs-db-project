@@ -141,6 +141,14 @@ public class SortMergeJoin extends Join {
                     combineTuplesIntoOutput(leftTuple, rightTuple, outputBatch);
 
                     if (outputBatch.isFull()) {
+                        int testLeft = leftTablePointer + 1;
+
+                        Tuple testLeftTuple = loadNextLeftTuple(testLeft);
+                        if (leftIsEqualToRight(testLeftTuple,rightTuple)) {
+                            leftTablePointer++;
+                        } else {
+                            rightTablePointer++;
+                        }
                         return outputBatch;
                     }
                     rightTablePointer++;
@@ -155,6 +163,14 @@ public class SortMergeJoin extends Join {
                         combineTuplesIntoOutput(leftTuple, rightTuple, outputBatch);
 
                         if (outputBatch.isFull()) {
+                            int testLeft = leftTablePointer + 1;
+
+                            Tuple testLeftTuple = loadNextLeftTuple(testLeft);
+                            if (leftIsEqualToRight(testLeftTuple,rightTuple)) {
+                                leftTablePointer++;
+                            } else {
+                                rightTablePointer++;
+                            }
                             return outputBatch;
                         }
                         rightTablePointer++;
@@ -168,13 +184,21 @@ public class SortMergeJoin extends Join {
                     }
 
                     leftTablePointer++;
-
                     leftTuple = loadNextLeftTuple(leftTablePointer);
+
                     while (!endOfRightTable() && !endOfLeftTable() && leftIsEqualToRight(leftTuple, rightTuple)) {
 
                         combineTuplesIntoOutput(leftTuple, rightTuple, outputBatch);
 
                         if (outputBatch.isFull()) {
+                            int testLeft = leftTablePointer + 1;
+
+                            Tuple testLeftTuple = loadNextLeftTuple(testLeft);
+                            if (leftIsEqualToRight(testLeftTuple,rightTuple)) {
+                                leftTablePointer++;
+                            } else {
+                                rightTablePointer++;
+                            }
                             return outputBatch;
                         }
                         leftTablePointer++;
@@ -186,7 +210,6 @@ public class SortMergeJoin extends Join {
                         leftTuple = loadNextLeftTuple(leftTablePointer);
 
                     }
-
                     if (endOfRightTable() || endOfLeftTable()) {
                         break;
                     }
@@ -309,11 +332,11 @@ public class SortMergeJoin extends Join {
                     File inputFile = new File(leftTableName + "0.0");
                     inputFile.delete();
                 } catch (IOException io) {
-                    System.err.println("smj: Error in reading left batches" + io);
+                    System.err.println("SortMergeJoin: Error in reading left batches" + io);
                     System.exit(1);
                 }
             } catch (ClassNotFoundException ce) {
-                System.err.println("smj: Error in reading left batches" + ce);
+                System.err.println("SortMergeJoin: Error in reading left batches" + ce);
                 System.exit(1);
             } catch (IOException io) {
                 return null;
