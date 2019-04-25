@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Component.iml" filepath="$PROJECT_DIR$/Component.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cs-db-project.iml" filepath="$PROJECT_DIR$/cs-db-project.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
     </modules>
   </component>
